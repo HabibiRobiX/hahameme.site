@@ -33,7 +33,7 @@ app.post("/create-checkout-one-time", async (req, res) => {
           price_data: {
             currency: "eur",
             product_data: { name: "Meme Unic" },
-            unit_amount: 100, // 1€ = 100 cents
+            unit_amount: 100,
           },
           quantity: 1,
         },
@@ -47,6 +47,7 @@ app.post("/create-checkout-one-time", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // Abonament (5€/lună)
 app.post("/create-checkout-subscription", async (req, res) => {
