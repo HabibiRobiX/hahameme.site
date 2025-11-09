@@ -5,22 +5,24 @@ import Stripe from "stripe";
 
 const app = express();
 const port = process.env.PORT || 3000;
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// Folosește test key pentru a nu plăti nimic
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_12345");
 
 // __dirname pentru Node ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve static files (style.css etc.)
+// Serve static files
 app.use(express.static(__dirname));
 app.use(express.json());
 
-// Ruta pentru pagina principală
+// Pagina principală
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Ruta pentru plata unică (1€/meme)
+// Plata unică (1€/meme)
 app.post("/create-checkout-one-time", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -46,7 +48,7 @@ app.post("/create-checkout-one-time", async (req, res) => {
   }
 });
 
-// Ruta pentru abonament (5€/lună)
+// Abonament (5€/lună)
 app.post("/create-checkout-subscription", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -54,7 +56,7 @@ app.post("/create-checkout-subscription", async (req, res) => {
       mode: "subscription",
       line_items: [
         {
-          price: "price_1SRgbkDw06ZG6dOZMn5WRcIL", // aici pui ID-ul planului tău de abonament din Stripe
+          price: "price_XXXXXXXXXXXXXXXX", // pune Price ID-ul tău real
           quantity: 1,
         },
       ],
@@ -76,7 +78,7 @@ app.get("/cancel", (req, res) => {
   res.sendFile(path.join(__dirname, "cancel.html"));
 });
 
-// Pornim serverul
+// Pornește server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
