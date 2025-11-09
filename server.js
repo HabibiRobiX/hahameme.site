@@ -1,26 +1,23 @@
-const express = require('express');
-const axios = require('axios');
-require('dotenv').config();
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use(express.static('public'));
+// Asta e necesară pentru ca Node să știe unde e fișierul tău actual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.post('/generate', async (req, res) => {
-    const { text } = req.body;
-    try {
-        const response = await axios.post(
-            'https://api.openai.com/v1/images/generations',
-            { prompt: text, n: 1, size: "512x512" },
-            { headers: { 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`, 'Content-Type': 'application/json' } }
-        );
-        const imageUrl = response.data.data[0].url;
-        res.json({ imageUrl });
-    } catch (error) {
-        console.error(error.response?.data || error.message);
-        res.status(500).json({ error: 'Ceva nu a mers.' });
-    }
+// Servim fișierele statice (cum ar fi style.css)
+app.use(express.static(__dirname));
+
+// Când cineva intră pe /, trimitem index.html
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.listen(PORT, () => console.log(`Serverul rulează pe port ${PORT}`));
+// Pornim serverul
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
