@@ -18,23 +18,22 @@
   </div>
 
   <script>
-    // Buton plată unică
+    // Plata unică
     document.getElementById("buyOne").addEventListener("click", async () => {
       const res = await fetch("/create-checkout-one-time", { method: "POST" });
       const data = await res.json();
       window.location = data.url;
     });
 
-    // Buton abonament
+    // Abonament
     document.getElementById("subscribe").addEventListener("click", async () => {
       const res = await fetch("/create-checkout-subscription", { method: "POST" });
       const data = await res.json();
       window.location = data.url;
     });
 
-    // Buton de generare meme (rămâne logica ta actuală)
+    // Generare meme (logica ta)
     document.getElementById("generateMeme").addEventListener("click", () => {
-      // codul tău pentru generarea meme-ului
       alert("Generare meme!");
     });
   </script>
