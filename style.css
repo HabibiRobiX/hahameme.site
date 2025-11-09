@@ -1,0 +1,78 @@
+/* Stil general pentru body */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #f0f0f0, #c0c0f0);
+  margin: 0;
+}
+
+/* Container principal */
+.container {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Titlu */
+.container h1 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Input text */
+input[type="text"] {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+/* Buton */
+button {
+  background-color: #6a5acd;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #483d8b;
+}
+
+/* Imagine meme */
+img.meme {
+  margin-top: 1rem;
+  max-width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* Loading text */
+#loading {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #6a5acd;
+}
+
+/* Mobile responsive */
+@media (max-width: 500px) {
+  .container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+  button, input[type="text"] {
+    font-size: 0.9rem;
+  }
+}
