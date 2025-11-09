@@ -1,34 +1,52 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Hahameme</title>
-<style>
-body { font-family: Arial; text-align: center; margin-top: 50px; }
-input, button { padding: 10px; font-size: 16px; }
-img { margin-top: 20px; max-width: 80%; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hahameme Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Hahameme Generator</h1>
-<input type="text" id="text" placeholder="Scrie textul meme-ului" size="40">
-<button onclick="generateMeme()">Generează</button>
-<div id="result"></div>
-<script>
-async function generateMeme() {
-    const text = document.getElementById('text').value;
-    const res = await fetch('/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
-    });
-    const data = await res.json();
-    if(data.imageUrl){
-        document.getElementById('result').innerHTML = `<img src="${data.imageUrl}" />`;
-    } else {
-        document.getElementById('result').innerText = "Eroare la generare.";
-    }
-}
-</script>
+    <div class="container">
+        <h1>Hahameme Generator</h1>
+        <input type="text" id="memeText" placeholder="Scrie textul meme-ului...">
+        <button id="generateBtn">Generează</button>
+        <div id="loading" style="display:none;">⏳ Generating...</div>
+        <img class="meme" id="memeImage" src="" alt="Meme va apărea aici">
+    </div>
+
+    <script>
+        const generateBtn = document.getElementById('generateBtn');
+        const memeText = document.getElementById('memeText');
+        const memeImage = document.getElementById('memeImage');
+        const loading = document.getElementById('loading');
+
+        generateBtn.addEventListener('click', async () => {
+            const text = memeText.value.trim();
+            if (!text) return alert("Scrie ceva text pentru meme!");
+
+            loading.style.display = 'block';
+            memeImage.src = '';
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                const data = await response.json();
+                if (data.imageUrl) {
+                    memeImage.src = data.imageUrl;
+                } else {
+                    alert('Eroare la generare!');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Eroare la generare!');
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
