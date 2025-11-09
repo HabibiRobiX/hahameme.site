@@ -20,10 +20,11 @@
   <script>
     // Plata unică
     document.getElementById("buyOne").addEventListener("click", async () => {
-      const res = await fetch("/create-checkout-one-time", { method: "POST" });
-      const data = await res.json();
-      window.location = data.url;
-    });
+  const res = await fetch("/create-checkout-one-time", { method: "POST" });
+  const data = await res.json();
+  console.log(data); // verifică ce primești aici
+  window.location = data.url;
+});
 
     // Abonament
     document.getElementById("subscribe").addEventListener("click", async () => {
